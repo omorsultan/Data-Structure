@@ -15,7 +15,6 @@ void bfs(ll s,ll n)
     {
         ll u = q.front();
         q.pop();
-        ans.push_back(u);
         for(ll child : g[u])
         {
             if(!vis[child])
@@ -49,7 +48,7 @@ int main()
             n=parent[n];
         }
         cout<<ans.size()<<endl;
-        for(ll i=ans.size();i>=0;i--)
+        for(ll i=ans.size()-1;i>=0;i--)
         {
             cout<<ans[i]<<" ";
         }
