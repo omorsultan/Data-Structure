@@ -3,7 +3,7 @@ using namespace std;
 #define ll long long
 const ll N = 1e6+10;
 vector<pair<ll,ll>>g[N];
-ll inf =1e10+10;
+ll inf =1e18+10;
 vector<ll>dist(N,inf);
 void dijkstra(ll src)
 {
