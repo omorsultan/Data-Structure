@@ -35,7 +35,7 @@ int main()
     }
    
     if(!bellman(1))
-    {
-        for(ll i=1;i<=n;i++)cout<<dist[i]<<" ";
-    }
+    for(ll i=1;i<=n;i++)cout<<dist[i]<<" ";
+    else cout<<-1;
+    
 }
