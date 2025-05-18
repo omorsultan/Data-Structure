@@ -8,7 +8,7 @@ ll inf = 1e18+10;
 vector<ll>dist(N,inf);
 vector<bool>negCycle(N,false);
 ll n,m,q,s;
-bool bellman(ll src)
+void bellman(ll src)
 {
     dist[src]=0;
     for(ll i=1;i<=n;i++)
@@ -21,11 +21,11 @@ bool bellman(ll src)
             if(dist[u]+w<dist[v]&&dist[u]!=inf)
             {
                 dist[v]=dist[u]+w;
-                if(i==n)return true;
+              
             }
         }
     }
-    for(ll i=1;i<=n;i++)
+    for(ll i=1;i<=1;i++)
     {
         for(vector<ll>child : g)
         {
@@ -36,9 +36,11 @@ bool bellman(ll src)
             {
                negCycle[v]=true;
             }
+             if (negCycle[u])
+                negCycle[v] = true;
         }
     }
-    return false;
+    
 }
 int main()
 {
@@ -47,7 +49,9 @@ int main()
     {
         cin>>n>>m>>q>>s;
         if((n+m+q+s)==0 && s==0){input = false;return 0;}
-        g.clear();dist.resize(N,inf);
+        g.clear();
+        fill(dist.begin(), dist.end(), inf);
+        fill(negCycle.begin(), negCycle.end(), false);
     for(ll i=0;i<m;i++)
     {
         ll u,v,w;
