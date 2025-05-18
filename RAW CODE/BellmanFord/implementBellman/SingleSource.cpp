@@ -25,7 +25,7 @@ void bellman(ll src)
             }
         }
     }
-    for(ll i=1;i<=1;i++)
+    for(ll i=1;i<=n;i++)
     {
         for(vector<ll>child : g)
         {
