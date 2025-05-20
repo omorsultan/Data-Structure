@@ -4,11 +4,10 @@ using namespace std;
 const ll N = 1e6+10;
 vector<ll>g[N];
 vector<ll>ans;
-vector<ll>vis(N);
 void topSort(ll* ind,ll n)
 {
   queue<ll>q;
-  for(ll i=0;i<n;i++)if(ind[i]==0)q.push(i);
+  for(ll i=1;i<=n;i++)if(ind[i]==0)q.push(i);
   while(!q.empty())
   {
     ll u=q.front();
@@ -16,12 +15,8 @@ void topSort(ll* ind,ll n)
     ans.push_back(u);
     for(ll child : g[u])
     {
-      if(!vis[child])
-      {
        ind[child]--;
-       if(ind[child]==0)q.push(child);
-      }
-    
+       if(ind[child]==0)q.push(child); 
     }
   }
 }
@@ -33,7 +28,7 @@ int main()
   for(ll i=0;i<m;i++)
   {
     ll u,v;cin>>u>>v;
-    cin>>u>>v;
+    // cin>>u>>v;
     g[u].push_back(v);
     index[v]++;
   }
