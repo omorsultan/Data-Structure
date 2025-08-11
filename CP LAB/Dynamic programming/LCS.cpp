@@ -1,21 +1,25 @@
 //submitted by omor_sultan
 #include<bits/stdc++.h>
 using namespace std;
-
-string solve(string s1,string s2,int i,int j,string s)
-{
-  string sh="";
- if(i==0||j==0)return s;
- else if(s[i]==s[j]){
-  sh+=s[i];return sh;
- }
- else {
-  
- }
-}
-signed main()
-{
-    string s1,s2,s="";
-    cin>>s1>>s2;
-    cout<<solve(s1,s2,s1.length(),s2.length(),s);
+signed main() {
+    string a, b;
+    cin >> a >> b;
+    int n = a.size();
+    int m = b.size();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    for (int i = 1; i <= n; i++) 
+     for (int j = 1; j <= m; j++) 
+        if (a[i - 1] == b[j - 1])   dp[i][j] = 1 + dp[i - 1][j - 1];
+        else  dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        
+    string lcs = "";
+    int i = n, j = m;
+    while(i > 0 && j > 0) {
+        if(a[i-1] == b[j-1]) 
+          lcs += a[i-1], i--, j--;
+        else if(dp[i-1][j] > dp[i][j-1]) i--;
+        else  j--;
+    }
+    reverse(lcs.begin(), lcs.end());
+    cout << lcs << endl;
 }
