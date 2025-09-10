@@ -1,6 +1,6 @@
-content = """# Ford-Fulkerson Algorithm (Steps)
+# Ford-Fulkerson Algorithm (Steps)
 
-# 1. Initialize Flow
+## 1. Initialize Flow
 - Set flow on every edge = 0.
 
 ## 2. Build Residual Graph
