@@ -1,0 +1,46 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled static libraries
+*.a
+*.lib
+
+# Compiled dynamic libraries
+*.so
+*.dll
+*.dylib
+
+# Executable files
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.pdb
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj*
+*.filters
+
+# Build directories
+/build/
+/bin/
+/Debug/
+/Release/
