@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+#define int int
 struct Point {
     int x, y;
 };
@@ -11,17 +11,16 @@ struct Point {
 // 1 -> clockwise
 // 2 -> counterclockwise
 int orientation(Point p, Point q, Point r) {
-    long long val = (long long)(q.y - p.y) * (r.x - q.x) -
-                    (long long)(q.x - p.x) * (r.y - q.y);
+    int val = (int)(q.y - p.y) * (r.x - q.x) - (int)(q.x - p.x) * (r.y - q.y);
 
     if (val == 0) return 0;          // collinear
     return (val > 0) ? 1 : 2;        // 1->clockwise, 2->counterclockwise
 }
 
 // Distance squared (for tie-breaking in sorting)
-long long distSq(Point p1, Point p2) {
-    return (long long)(p1.x - p2.x) * (p1.x - p2.x) +
-           (long long)(p1.y - p2.y) * (p1.y - p2.y);
+int distSq(Point p1, Point p2) {
+    return (int)(p1.x - p2.x) * (p1.x - p2.x) +
+           (int)(p1.y - p2.y) * (p1.y - p2.y);
 }
 
 Point p0; // global pivot
@@ -41,8 +40,8 @@ vector<Point> convexHull(vector<Point>& points) {
     // Step 1: Find bottom-most point (pivot)
     int ymin = points[0].y, minIdx = 0;
     for (int i = 1; i < n; i++) {
-        if ((points[i].y < ymin) ||
-            (points[i].y == ymin && points[i].x < points[minIdx].x)) {
+        if ((points[i].y < ymin) ||(points[i].y == ymin && points[i].x < points[minIdx].x))
+        {
             ymin = points[i].y;
             minIdx = i;
         }
@@ -93,7 +92,7 @@ vector<Point> convexHull(vector<Point>& points) {
 }
 
 // Driver code
-int main() {
+signed main() {
     vector<Point> points = {{0, 3}, {2, 2}, {1, 1}, {2, 1},
                             {3, 0}, {0, 0}, {3, 3}};
     vector<Point> hull = convexHull(points);

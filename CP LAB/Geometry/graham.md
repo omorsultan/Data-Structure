@@ -1,72 +1,108 @@
-# Graham's Scan Algorithm
+# Graham’s Scan Algorithm (Step by Step)
 
-## Steps
+We are given a set of points in 2D, and we want to find the **convex hull** (smallest convex polygon enclosing all points).
 
-1. **Pick anchor point (P0)**: lowest y-coordinate (if tie, choose lowest x-coordinate).
-2. **Sort points**: Sort all other points by polar angle with respect to P0.
+ 
 
-   * If angles tie, sort by distance from P0.
-3. **Initialize stack**: Push first 3 points into the stack.
-4. **Process remaining points**:
+## Step 1: Find Pivot
 
-   * For each next point, check the orientation with the last 2 points in stack.
-   * While last 2 points + current point do not form a counter-clockwise turn, pop the stack.
-   * Push the current point into the stack.
-5. **Result**: Stack now contains the points forming the convex hull.
+* Choose the lowest **y-coordinate** point.
+* If tie → choose the **leftmost x**.
+* Guarantees a unique starting point (always part of hull).
+
+**Example:**
+
+```
+Points = {(0,3), (2,2), (1,1), (2,1), (3,0), (0,0), (3,3)}
+Pivot = (0,0)
+```
+
+
+## Step 2: Sort by Polar Angle
+
+* Sort all other points by **angle w\.r.t pivot**.
+* If two points have the same angle (collinear), keep the **farther one** (inner point is useless).
+* Now points are ordered like “sweeping a line” counter-clockwise around pivot.
+
+**Example:**
+
+```
+Pivot = (0,0), points = (1,1), (2,0), (0,2)
+Order = (2,0) → (1,1) → (0,2)
+```
+
+ 
+
+## Step 3: Traverse Points
+
+* Walk through sorted points.
+* Maintain a **stack of hull vertices**.
+* For each new point:
+
+  * Check **turn direction** of last two points + new point:
+
+    * Left turn (CCW) → good, keep it.
+    * Right turn (CW) → pop last point (not on hull).
+* Continue until all points are processed.
+
+ 
+
+## Step 4: Output
+
+* The stack now contains convex hull points in order.
+
+ 
+
+## Why Orientation?
+
+* Orientation function tells direction of a turn formed by three points `p, q, r`.
+
+**Formula:**
+
+```
+val = (qy - py) * (rx - qx) - (qx - px) * (ry - qy)
+```
+
+* val == 0 → collinear
+* val > 0 → clockwise turn
+* val < 0 → counter-clockwise turn
+
+👉 **Why needed?**
+
+* To decide if the last point stays on the hull.
+* If turn is right (CW), the middle point is inside, not on hull → remove it.
+
+ 
+
+## Why Compare (Sorting)?
+
+* We need points in **increasing polar angle** from pivot.
+
+Instead of slow `atan2`, use **orientation test**:
+
+```
+bool compare(Point p1, Point p2) {
+    int o = orientation(p0, p1, p2);
+    if (o == 0) return distSq(p0, p1) < distSq(p0, p2); // farther last
+    return (o == 2); // CCW means p1 before p2
+}
+```
+
+ 
+
+## Intuition with Analogy
+
+* Imagine standing at the pivot with a rotating **laser beam**:
+
+  * As it rotates CCW, you encounter points → that’s the sorting step.
+  * If the beam turns right → you went inside the polygon → backtrack (pop).
+
+Orientation = heart of the algorithm (decides left/right turn).
+Compare = ensures sweeping in correct CCW order.
+
+ 
 
 ## Complexity
 
-* **Time**: O(n log n) (due to sorting)
-* **Space**: O(n)
-
-# Graham's Scan Algorithm
-
-## Input
-
-* Set of points P\[0..n-1].
-* If n < 3, return all points (trivial hull).
-
-## Steps
-
-1. **Find P0 (anchor)**: pick point with smallest y; if tie, smallest x.
-
-   * Time: O(n)
-2. **Sort by polar angle around P0**:
-
-   * Comparator: compare angles atan2(y-P0.y, x-P0.x)
-   * Tie-break (non-collinear variant): smaller distance from P0 first (distance increasing)
-   * Result: points ordered by angle
-   * Time: O(n log n)
-3. (Optional) Remove duplicates / identical to P0 before scanning.
-4. **Prepare stack**: push P0, push sorted\[0], push sorted\[1]
-5. **Orientation function** (for points a,b,c):
-
-   * val = (b.y - a.y)*(c.x - b.x) - (b.x - a.x)*(c.y - b.y)
-   * if val == 0  -> collinear
-   * if val > 0   -> clockwise
-   * if val < 0   -> counter-clockwise
-   * Counter-clockwise turns are kept for hull points
-6. **Main loop**: for each point pt from sorted\[2] to end:
-
-   * while stack has ≥ 2 points AND orientation(secondTop, top, pt) <= 0 (not counter-clockwise) → pop top
-   * push(pt)
-7. **Result**: stack contains convex hull points in order (counter-clockwise)
-
-   * For clockwise order, reverse the stack
-
-## Complexity
-
-* Time: O(n log n) (sorting dominates)
-* Space: O(n) (stack + sort)
-
-## Include collinear points on hull edges
-
-* Sort tie-break: for equal angle, sort by distance from P0 decreasing (farthest first), or keep increasing but later reverse equal-angle blocks
-* Change pop condition: orientation(...) < 0 (pop only on strict clockwise)
-* Effect: collinear points along hull boundary kept in output
-
-## Edge-cases & tips
-
-* Many collinear points: non-collinear variant returns only two endpoints; collinear-include variant returns all boundary points
-* Use integer cross-product to avoid floating errors
-* After sorting, remove duplicate coordinates to simplify
+* **Time**: O(n log n) (sorting dominates)
+* **Space**: O(n) (stack + sort)
