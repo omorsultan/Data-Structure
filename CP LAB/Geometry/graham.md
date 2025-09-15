@@ -67,7 +67,7 @@ val = (qy - py) * (rx - qx) - (qx - px) * (ry - qy)
 * val > 0 → clockwise turn
 * val < 0 → counter-clockwise turn
 
-👉 **Why needed?**
+ **Why needed?**
 
 * To decide if the last point stays on the hull.
 * If turn is right (CW), the middle point is inside, not on hull → remove it.

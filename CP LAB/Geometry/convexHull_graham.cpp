@@ -68,7 +68,8 @@ vector<Point> convexHull(vector<Point>& points) {
     st.push(filtered[0]);
     st.push(filtered[1]);
     st.push(filtered[2]);
-
+    // explain below for loop
+    // This loop processes each point in the filtered list starting from the 3rd point
     for (int i = 3; i < filtered.size(); i++) {
         while (st.size() > 1) {
             Point top = st.top(); st.pop();
