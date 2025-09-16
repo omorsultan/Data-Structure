@@ -1,5 +1,5 @@
 # Graham’s Scan Algorithm (Pseudocode)
-
+ https://www.youtube.com/watch?v=B2AJoQSZf4M&ab_channel=StableSort
 ```cpp
 Algorithm GrahamScan(points[], n):
  

@@ -1,3 +1,6 @@
+/*
+ https://www.youtube.com/watch?v=B2AJoQSZf4M&ab_channel=StableSort 
+*/
 #include <bits/stdc++.h>
 using namespace std;
 #define int int
@@ -94,8 +97,7 @@ vector<Point> convexHull(vector<Point>& points) {
 
 // Driver code
 signed main() {
-    vector<Point> points = {{0, 3}, {2, 2}, {1, 1}, {2, 1},
-                            {3, 0}, {0, 0}, {3, 3}};
+    vector<Point> points = {{0,0},{4,0},{1,1},{2,2}};
     vector<Point> hull = convexHull(points);
 
     cout << "Convex Hull points:\n";
